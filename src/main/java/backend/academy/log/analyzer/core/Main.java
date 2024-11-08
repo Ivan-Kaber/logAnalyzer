@@ -11,7 +11,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 @SuppressWarnings("RegexpSinglelineJava")
 public class Main {
-    private static final String DEFAULT_SAVE_PATH = "./src/main/resources/statistic/report";
+    private static final String DEFAULT_SAVE_PATH = "./src/main/resources/statistics/report";
 
     public static void main(String[] args) {
         ArgumentParser argumentParser = new ArgumentParser();
@@ -43,8 +43,10 @@ public class Main {
 
     private static void generateReport(StatisticsCalculator statisticsCalculator, ArgumentParser argumentParser) {
         ReportGenerator reportGenerator = ReportGeneratorFactory.create(argumentParser.format());
+
         String savePath = DEFAULT_SAVE_PATH + reportGenerator.getSaveFormat();
         reportGenerator.generateReport(statisticsCalculator, savePath);
+
         System.out.println("Report generated successfully at: " + savePath);
     }
 }

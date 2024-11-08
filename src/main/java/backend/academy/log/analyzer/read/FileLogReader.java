@@ -36,6 +36,14 @@ public class FileLogReader implements LogReader {
             .flatMap(this::parseFile);
     }
 
+    @Override
+    public List<String> getFileName() {
+        return filteredFiles.stream()
+            .map(Path::getFileName)
+            .map(Path::toString)
+            .toList();
+    }
+
     private void findFilteredFiles() {
         PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**" + pattern);
         try (Stream<Path> paths = Files.walk(START_PATH)) {

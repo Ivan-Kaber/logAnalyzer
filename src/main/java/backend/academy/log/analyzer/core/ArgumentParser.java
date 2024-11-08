@@ -26,11 +26,27 @@ public class ArgumentParser {
     private LocalDate fromDate;
     private LocalDate toDate;
 
-    public ArgumentParser(String[] args) {
+    public void initialize(String[] args) {
+        initJCommander(args);
+        validateDate();
+    }
+
+    private void initJCommander(String[] args) {
         JCommander.newBuilder()
             .addObject(this)
             .build()
             .parse(args);
     }
 
+    private void validateDate() {
+        try {
+            this.fromDate = from != null ? LocalDate.parse(from) : null;
+            this.toDate = to != null ? LocalDate.parse(to) : null;
+            if (fromDate != null && toDate != null && fromDate.isAfter(toDate)) {
+                throw new IllegalArgumentException("Start date cannot be after end date.");
+            }
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date format Please use 'yyyy-MM-dd'.", e);
+        }
+    }
 }

@@ -27,4 +27,3 @@ class LogReaderFactoryTest {
         assertInstanceOf(FileLogReader.class, logReader);
     }
 }
-g

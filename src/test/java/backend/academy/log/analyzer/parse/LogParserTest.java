@@ -31,7 +31,8 @@ public class LogParserTest {
         Optional<LogInformation> logInformation = LogParser.parseLine(logLine);
 
         assertTrue(logInformation.isPresent());
-        LogInformation info = logInformation.get();
+
+        LogInformation info = logInformation.orElseThrow(() -> new AssertionError("Expected a valid log entry"));
         assertEquals("74.125.60.158", info.remoteAddress());
         assertEquals("-", info.remoteUser());
         assertEquals(LocalDateTime.parse("18/May/2015:13:05:52 +0000", DATE_TIME_FORMATTER), info.time());

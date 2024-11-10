@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,14 +44,17 @@ class FileLogReaderTest {
             ));
 
             try (MockedStatic<LogParser> mockedParser = mockStatic(LogParser.class)) {
-                LogInformation logInfo =
-                    new LogInformation("192.168.0.1", "user1", null, "GET /index.html HTTP/1.1", 200, 1234,
-                        "http://example.com", "Mozilla/5.0");
-                mockedParser.when(() -> LogParser.parseLine(any(String.class))).thenReturn(logInfo);
+                LogInformation logInfo = new LogInformation(
+                    "192.168.0.1", "user1", null, "GET /index.html HTTP/1.1", 200, 1234, "http://example.com", "Mozilla/5.0"
+                );
+                mockedParser.when(() -> LogParser.parseLine(any(String.class))).thenReturn(Optional.of(logInfo));
 
-                Stream<LogInformation> logs = logReader.readLogs();
+                FileLogReader logReader = new FileLogReader("*.log");
+                List<LogInformation> logs = logReader.readLogs().toList(); // Collect the stream to a list
+
                 assertNotNull(logs);
-                assertEquals(1, logs.count());
+                assertEquals(1, logs.size());
+                assertEquals(logInfo, logs.get(0));
             }
         }
     }

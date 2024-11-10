@@ -14,6 +14,7 @@ java -jar target/analyzer-jar-with-dependencies.jar
 
 ## Описание параметров и допустимые значения:
 - **--path**: путь к одному или нескольким NGINX лог-файлам в виде локального шаблона или URL.
+Файлы должны располагаться в директории ``src/main/resources/logs``
 
 Примеры: `logs/**/*.txt`, `logs/*.txt`, `logs/*`, `logs/log2.txt`, 
 `https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs`.

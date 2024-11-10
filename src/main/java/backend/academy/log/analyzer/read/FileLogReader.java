@@ -12,7 +12,7 @@ import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class FileLogReader implements LogReader {
@@ -60,7 +60,8 @@ public class FileLogReader implements LogReader {
         try {
             return Files.lines(path)
                 .map(LogParser::parseLine)
-                .filter(Objects::nonNull);
+                .filter(Optional::isPresent)
+                .map(Optional::get);
         } catch (IOException e) {
             throw new ReadLogException("Failed to read log file", e);
         }

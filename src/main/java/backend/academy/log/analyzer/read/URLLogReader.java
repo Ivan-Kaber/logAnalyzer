@@ -17,6 +17,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class URLLogReader implements LogReader {
@@ -44,6 +45,8 @@ public class URLLogReader implements LogReader {
             new InputStreamReader(response.body(), StandardCharsets.UTF_8))) {
             return reader.lines()
                 .map(LogParser::parseLine)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .toList()
                 .stream();
         } catch (IOException e) {

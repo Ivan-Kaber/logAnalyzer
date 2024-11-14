@@ -11,7 +11,7 @@ java -jar path-name.jar
  --filter-field (поле для установки фильтра) 
  --filter-value (поле для установки значения)
 ```
-например: ```java -jar target/analyzer-jar-with-dependencies.jar --path logs/*.txt --from 2024-08-31 --format markdown```
+например: ```java -jar analyzer-jar-with-dependencies.jar --path logs/*.txt --from 2024-08-31 --format markdown```
 
 ## Описание параметров и допустимые значения:
 - **--path**: путь к одному или нескольким NGINX лог-файлам в виде локального шаблона или URL.
